@@ -21,26 +21,45 @@ base = pd.read_csv("credit_data.csv") #database into base dataframe
 #base.drop('age',1,inplace=True) # Delete whole age column, use it in last cases(to much errors, irreparable)
 #base.drop(base[base["age"]<0].index,inplace=True) #will delete only logs with age<0, still not the best
 #best method is to replace invalid logs with the mean if it is possible
-ageMean=base["age"][base["age"]>0].mean()  #will return the mean value of all ages>0
-base.loc[base.age<0,'age'] = ageMean #will replace <0 values with the mean  
+#ageMean=base["age"][base["age"]>0].mean()  #will return the mean value of all ages>0
+#base.loc[base.age<0,'age'] = ageMean #will replace <0 values with the mean  
 
 
 #====Missing data
-pd.isnull(base.age) #will return true or false if it is NaN value in whole df
-nullValues=base.loc[pd.isnull(base.age)] #will store in nullValues all logs with age=NaN
+#pd.isnull(base.age) #will return true or false if it is NaN value in whole df
+#nullValues=base.loc[pd.isnull(base.age)] #will store in nullValues all logs with age=NaN
 
 
 #====Predictors and class atribute
 #to work with some ml algorithms with need to separate predictors and the class atribute
-predictors=base.iloc[:,1:4] #(all rows,(income,age,loan columns (predictors))
-classVar=base.iloc[:,4] #(all rows, (default columns))
-from sklearn.impute import SimpleImputer
+predictors=base.iloc[:,1:4].values #(all rows,(income,age,loan columns (predictors))
+classVar=base.iloc[:,4].values #(all rows, (default columns))
 import numpy as np
-imputer = SimpleImputer(missing_values=np.nan, strategy='mean') #will imput all missing values with mean
-imputer = imputer.fit(predictors[:, 0:3]) #process to fit the imputer on predictors.
-predictors[:, 0:3] = imputer.transform(predictors[:,0:3]) #finally predictors will be updated w/o NaN via transform
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(missing_values=np.nan, strategy="mean")
+imputer = imputer.fit(predictors[:, 0:3])
+predictors[:, 0:3] = imputer.transform(predictors[:,0:3])
+
 
 #=====Staggering variables
+#For ml knn algorithms not consider one variable most important than the other variable
+#Also will execute algorithms much faster
+#Two ways of doing it -> X is one variable, for example,age
+###### Standardisation: 
+#x = (x - mean(x))/standard deviation(x)
+#can have values<0 
+#Stronger when data has to much outliners(higher SD)
+######Normalization: 
+# x = (x -min(x))/(max(x) - min(x))
+# values between 0 and 1
+
+#Doing a test with Standardisation
+from sklearn.preprocessing import StandardScaler
+predictors=StandardScaler().fit_transform(predictors) #transforms and fit predictors returning updated df
+
+
+
+
 
 
 
