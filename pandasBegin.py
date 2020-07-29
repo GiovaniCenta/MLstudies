@@ -31,10 +31,11 @@ selRowColumns = base.iloc[5:10,3:5]
 ageLessThanX = base.loc[base['age']<50] #returns database logs that has age<X
 
 maxAge=base.loc[base['age'].max()] #base log with max age
+#obs: you can use base.loc[base.age.max()] instead
 
 maxAgeCG=maxAge.loc['capital-gain'] #capital gains of max age
 
-maxAgeEducation=maxAge.loc['education'] #education level of the older interviewee
+maxAgeEducation=maxAge.loc['education'] #educational level of the older interviewee
 
 maxHWEd = base.loc[base['hour-per-week'].max()].loc['education']
 #print(f'Max hours per week education: {maxHWEd}')
