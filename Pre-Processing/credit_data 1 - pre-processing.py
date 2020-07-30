@@ -30,6 +30,9 @@ base = pd.read_csv("credit_data.csv") #database into base dataframe
 #nullValues=base.loc[pd.isnull(base.age)] #will store in nullValues all logs with age=NaN
 
 
+
+
+
 #====Predictors and class atribute
 #to work with some ml algorithms with need to separate predictors and the class atribute
 predictors=base.iloc[:,1:4].values #(all rows,(income,age,loan columns (predictors))
