@@ -106,4 +106,69 @@ pd.get_dummies(df2[['price', 'color', 'size']], drop_first = True)
 
 
 ##########Partitioning a dataset into separate training and test sets
+#Comparing predictions to true label in the test set can be understood as an perfomance evaluation of our model.
+#Example with one wine data
+import pandas as pd 
+df_wine = pd.read_csv('C:/Users/Cliente/.spyder-py3/ml1/Pre-Processing/wine.data',header=None)
+df_wine.columns = ['Class label', 'Alcohol','Malic acid', 'Ash','Alcalinity of ash', 'Magnesium','Total phenols','Flavanoids','Nonflavanoid phenols', 'Proanthocyanins',  'Color intensity', 'Hue',  'OD280/ OD315 of diluted wines',  'Proline']
+#The class label are for different types of grape grown 
+#Separating class and redicors labels
+predictors,classLabel=df_wine.iloc[:,1:].values,df_wine.iloc[:,0].values
+#Spliting in train and test 
+from sklearn.model_selection import train_test_split
+predictors_train,predictors_test,classLabel_train,classLabel_test = train_test_split(predictors, classLabel, test_size=0.3, random_state=0,stratify=classLabel)
+#doing this 70% of the samples go to train df's and 30% to test's dataframes
+#smaller the test set more inaccurate the esmitamtin of generalization error
+#Diving a dataset into training and test sets is all about balancing this trade-off
+#most common useds are 60:40,70:30,80:20, depending on the size of the initial dataset
+#for larger datasets 90:10 and 99:1 are also common
+
+###########Bringing features to the same scale
+#Feature scaling is a crucial step, only in few algorithms can be forgotten, decision trees and random forest are two.
+#For a most ML algorithms to work properly we need to scale thigs,we cant have one column with values between 100 and 1000 and other with values between 0 and 1 (of course, if they are both with same importance)
+#There are two different common approaches to bring different features into scale
+#Normalization and Standardization
+
+######Normalization:Refers to rescalling of the features to a range of [0,1],special case of min max scalling
+#to normalize our data we can simply apply the min max scaling to each feature column
+#the new value of a sample can be calculated as follows
+# x = (x -min(x))/(max(x) - min(x))
+from sklearn.preprocessing import MinMaxScaler 
+mms = MinMaxScaler()
+predictors_train_norm = mms.fit_transform(predictors_train)
+predictors_test_norm = mms.transform(predictors_test)
+#although normalization via min max scaling is commonly used technique that is useful when we need values in a bounded interval, stardardization can be more practical for manyt ML algorithms, especially for optimization
+
+
+######Standardization: Using standardization, we center the feature columns at mean 0 with standard deviation 1 so that the feature columns takes the form of a normal distribution, which makes it easier to learn the weights. Furthermore, standardization maintains useful information about outliers and makes the algorithm less sensitive to them in contrast to min-max scaling, which scales the data to a limited range of values.
+#allow negative values
+from sklearn.preprocessing import StandardScaler
+stdsc = StandardScaler()
+predictors_train_std = stdsc.fit_transform(predictors_train)
+predictors_test_std = stdsc.transform(predictors_test)
+
+######Selecting meaningful features
+#if we notice that a model performs much better on a training dataset than on the test dataset, the observation is a strong indicator of overfitting
+#Overfitting means the model fits the parameters too closely with regard to the particual observations in the training dataset,but doest not generalize well to new data
+#the reason is that our model is too complex for the given training daata
+#general solutions: Collect more training data, introduce a penalty for complexity regularization, choose a simpler model with fewer parameters, reduce the dimensionality of the data
+#Collecting more training data is often non applicable, further we will learn if more training data is helpful
+# L1 l2 processing
+
+
+
+
+
+
+#x = (x - mean(x))/standard deviation(x)  
+
+
+
+
+#########Obs: Weka is an interesting software to visualize probabilities tables and such
+
+
+
+
+
 

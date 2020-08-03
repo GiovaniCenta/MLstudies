@@ -24,6 +24,8 @@ selectSomeElements=base.iloc[10:50]
 selFirstRowColumns = base.iloc[0:1,0:1]
 selRowColumns = base.iloc[5:10,3:5]
 
+for col in base.columns:
+    print(col) #show columns names
 
 
 
