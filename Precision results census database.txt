@@ -1,0 +1,21 @@
+Census database
+count = 32561 logs
+
+
+===========NAIVE BAYES
+#With all pre processing = 47,9%
+#Without scaler and OHE = 79,47%
+#Without scaler only = 79,49%
+#With scaler and LabelEncoder without OHE = 80,45%     [BEST RESULT]
+#With scaler and OHE without LabelEnconder = 47,9%
+===========DECISION TREE
+#With all pre processing = 81.04 %
+#Without OHE = 81.28%     [BEST RESULT]
+#Without scaler = 81.02%
+#Doesnt work without LabelEncoder
+===========RANDOM FOREST
+#n estimators = 40
+#With all pre processing = 84,76%    n=100: 85,07%
+#Without OHE = 84,83%
+#Without scaler = 84,89%     n=100: 85,09% [BEST RESULT]
+#Doesnt work without LabelEncoder
