@@ -19,3 +19,6 @@ count = 32561 logs
 #Without OHE = 84,83%
 #Without scaler = 84,89%     n=100: 85,09% [BEST RESULT]
 #Doesnt work without LabelEncoder
+
+===========RULES
+CN2 no pre processing via orange interface = 78,8%
